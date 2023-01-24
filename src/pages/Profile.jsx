@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAuth, updateProfile } from "firebase/auth";
-import { updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 
@@ -23,7 +23,24 @@ function Profile() {
     toast.success("successfuly logged out");
   };
 
-  const onSubmit = () => {};
+  const onSubmit = async () => {
+    try {
+      if (auth.currentUser.displayName !== name) {
+        // update display name in fire base
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+        });
+        // Update in firestore
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(userRef, {
+          name,
+        });
+      }
+    } catch (error) {
+      toast.error("something went wrong, couldn't pocess that");
+    }
+  };
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,

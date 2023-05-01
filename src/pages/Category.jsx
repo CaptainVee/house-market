@@ -62,6 +62,7 @@ function Category() {
             : "Places for sale"}
         </p>
       </header>
+
       {loading ? (
         <Spinner />
       ) : listings && listings.length > 0 ? (

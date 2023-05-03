@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import Listing from "./pages/Listing";
+import Contact from "./pages/Contact";
 function App() {
   return (
     <>
@@ -31,6 +32,7 @@ function App() {
             element={<Listing />}
           />
           <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/contact/:landlordId" element={<Contact />} />
         </Routes>
         <Navbar />
       </Router>
